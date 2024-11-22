@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public String submit(@ModelAttribute("user") User user, Model model) {
+    public String submit(@ModelAttribute("user") User user) {
         this.userService.handleSaveUser(user);
         return "redirect:/admin/user";
     }
@@ -60,9 +60,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/user/update", method = RequestMethod.POST)
-    public String updateUser(Model model, @ModelAttribute("userUpdated") User userUpdate) {
-        this.userService.handleUpdateUser(userUpdate);
-        return "redirect:/admin/user/" + userUpdate.getId();
+    public String updateUser(@ModelAttribute("userUpdated") User afterUpdatedUser) {
+        this.userService.handleUpdateUser(afterUpdatedUser);
+        return "redirect:/admin/user";
     }
 
 }
