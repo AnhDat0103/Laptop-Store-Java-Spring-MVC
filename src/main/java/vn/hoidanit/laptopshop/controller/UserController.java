@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,6 +43,13 @@ public class UserController {
         List<User> users = this.userService.findAll();
         model.addAttribute("users", users);
         return "admin/user/tableUsers";
+    }
+
+    @RequestMapping("admin/user/{id}")
+    public String showDetailUserPage(Model model, @PathVariable long id) {
+        User user = this.userService.getUserDetail(id);
+        model.addAttribute("user", user);
+        return "admin/user/user-detail";
     }
 
 }

@@ -33,4 +33,9 @@ public class UserService {
         return arrayUsers;
     }
 
+    public User getUserDetail(long id) {
+        User user = this.userRepository.getUserById(id);
+        return user;
+    }
+
 }
