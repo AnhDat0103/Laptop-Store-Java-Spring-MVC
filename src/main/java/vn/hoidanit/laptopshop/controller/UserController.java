@@ -26,7 +26,7 @@ public class UserController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String submit(@ModelAttribute("user") User user, Model model) {
-        System.out.println(user.toString());
+        this.userService.handleSaveUser(user);
         return "hello";
     }
 
