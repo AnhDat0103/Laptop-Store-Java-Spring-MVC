@@ -3,6 +3,8 @@ package vn.hoidanit.laptopshop.controller;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.UserService;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +18,13 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @RequestMapping("/")
+    public String showHomePage(Model model) {
+        List<User> list = this.userService.findAllByEmail("a2@gmail.com");
+        System.out.println(list);
+        return "hello";
     }
 
     @RequestMapping("/admin/user")
