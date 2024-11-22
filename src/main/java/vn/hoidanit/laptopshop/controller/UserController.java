@@ -22,21 +22,26 @@ public class UserController {
 
     @RequestMapping("/")
     public String showHomePage(Model model) {
-        List<User> list = this.userService.findAllByEmail("a2@gmail.com");
-        System.out.println(list);
         return "hello";
     }
 
-    @RequestMapping("/admin/user")
+    @RequestMapping("/admin/user/create")
     public String showCreateUserPage(Model model) {
         model.addAttribute("user", new User());
         return "admin/user/create";
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
     public String submit(@ModelAttribute("user") User user, Model model) {
         this.userService.handleSaveUser(user);
-        return "hello";
+        return "redirect:/admin/user";
+    }
+
+    @RequestMapping("/admin/user")
+    public String getTableUserPage(Model model) {
+        List<User> users = this.userService.findAll();
+        model.addAttribute("users", users);
+        return "admin/user/tableUsers";
     }
 
 }
