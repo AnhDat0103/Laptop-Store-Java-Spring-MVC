@@ -45,11 +45,24 @@ public class UserController {
         return "admin/user/tableUsers";
     }
 
-    @RequestMapping("admin/user/{id}")
+    @RequestMapping("/admin/user/{id}")
     public String showDetailUserPage(Model model, @PathVariable long id) {
         User user = this.userService.getUserDetail(id);
         model.addAttribute("user", user);
         return "admin/user/user-detail";
+    }
+
+    @RequestMapping("/admin/user/update/{id}")
+    public String showUpdateUserPage(Model model, @PathVariable long id) {
+        User currentUser = this.userService.getUserDetail(id);
+        model.addAttribute("userUpdated", currentUser);
+        return "admin/user/update-info-user";
+    }
+
+    @RequestMapping(value = "/admin/user/update", method = RequestMethod.POST)
+    public String updateUser(Model model, @ModelAttribute("userUpdated") User userUpdate) {
+        this.userService.handleUpdateUser(userUpdate);
+        return "redirect:/admin/user/" + userUpdate.getId();
     }
 
 }

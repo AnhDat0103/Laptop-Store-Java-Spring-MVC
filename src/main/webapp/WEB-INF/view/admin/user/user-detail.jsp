@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table users</title>
+    <title>Table users ${user.id}</title>
 
     <!-- Latest compiled and minified CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <hr>
         <div class="card" style="width:50%">
             <div class="card-header">
-                Users with ${user.id}
+                Users with id = ${user.id}
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">Email: ${user.email}</li>
@@ -32,8 +32,8 @@
               <li class="list-group-item">Telephone number: ${user.telephone}</li>
               <li class="list-group-item">Address: ${user.address}</li>
             </ul>
-          </div>
-          
+        </div>
+        <a  href="/admin/user" class="btn btn-secondary mt-2">Back</a>  
     </div>
 
     

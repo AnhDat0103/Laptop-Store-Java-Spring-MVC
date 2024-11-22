@@ -38,4 +38,12 @@ public class UserService {
         return user;
     }
 
+    public void handleUpdateUser(User userUpdate) {
+        User user = this.userRepository.getUserById(userUpdate.getId());
+        user.setFullName(userUpdate.getFullName());
+        user.setAddress(userUpdate.getAddress());
+        user.setTelephone(userUpdate.getTelephone());
+        this.userRepository.save(user);
+    }
+
 }
