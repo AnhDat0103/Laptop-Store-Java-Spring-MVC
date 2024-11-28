@@ -21,10 +21,6 @@ public class Order {
 
     private double totalPrice;
 
-    public Order(long id) {
-        this.id = id;
-    }
-
     public long getId() {
         return id;
     }

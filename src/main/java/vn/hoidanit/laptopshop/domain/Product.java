@@ -24,20 +24,6 @@ public class Product {
     private String factory;
     private String target;
 
-    public Product(long id, String name, double price, String image, String detailDesc, String shortDesc,
-            long quantity, long sold, String factory, String target) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.image = image;
-        this.detailDesc = detailDesc;
-        this.shortDesc = shortDesc;
-        this.quantity = quantity;
-        this.sold = sold;
-        this.factory = factory;
-        this.target = target;
-    }
-
     public long getId() {
         return id;
     }

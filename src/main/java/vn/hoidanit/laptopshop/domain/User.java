@@ -33,17 +33,6 @@ public class User {
     public User() {
     }
 
-    public User(long id, String fullName, String email, String password, String address, String telephone,
-            String avatar) {
-        this.id = id;
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-        this.telephone = telephone;
-        this.avatar = avatar;
-    }
-
     public long getId() {
         return id;
     }

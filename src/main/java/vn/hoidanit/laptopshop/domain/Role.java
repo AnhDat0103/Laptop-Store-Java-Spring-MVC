@@ -22,12 +22,6 @@ public class Role {
     @OneToMany(mappedBy = "role")
     private List<User> users;
 
-    public Role(long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
     public long getId() {
         return id;
     }
