@@ -1,9 +1,14 @@
 package vn.hoidanit.laptopshop.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -16,17 +21,27 @@ public class User {
     private String password;
     private String address;
     private String telephone;
+    private String avatar;
+
+    @ManyToOne()
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    List<Order> orders;
 
     public User() {
     }
 
-    public User(long id, String fullName, String email, String password, String address, String telephone) {
+    public User(long id, String fullName, String email, String password, String address, String telephone,
+            String avatar) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.address = address;
         this.telephone = telephone;
+        this.avatar = avatar;
     }
 
     public long getId() {
@@ -77,10 +92,30 @@ public class User {
         this.telephone = telephone;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", fullName=" + fullName + ", email=" + email + ", password=" + password
-                + ", address=" + address + ", telephone=" + telephone + "]";
+                + ", address=" + address + ", telephone=" + telephone + ", avatar=" + avatar + ", role=" + role
+                + ", orders=" + orders + "]";
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
 }
