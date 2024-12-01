@@ -24,8 +24,8 @@ public class Order {
 
     private double totalPrice;
 
-    // @OneToMany(mappedBy = "order")
-    // private List<OrderDetail> OrderDetails;
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> OrderDetails;
 
     public long getId() {
         return id;
@@ -35,13 +35,13 @@ public class Order {
         this.id = id;
     }
 
-    // public List<OrderDetail> getOrderDetails() {
-    // return OrderDetails;
-    // }
+    public List<OrderDetail> getOrderDetails() {
+        return OrderDetails;
+    }
 
-    // public void setOrderDetails(List<OrderDetail> orderDetails) {
-    // OrderDetails = orderDetails;
-    // }
+    public void setOrderDetails(List<OrderDetail> orderDetails) {
+        OrderDetails = orderDetails;
+    }
 
     public User getUser() {
         return user;
@@ -57,12 +57,6 @@ public class Order {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    @Override
-    public String toString() {
-        return "Order [id=" + id + ", user=" + user + ", totalPrice=" + totalPrice +
-                "]";
     }
 
 }
