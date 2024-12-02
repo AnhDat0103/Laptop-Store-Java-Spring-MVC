@@ -30,31 +30,49 @@
                     
                     <div class="container mt-5">
                       <div class="row">
-                          <div class="col-md-6 col-12 mx-auto">
+                          <div class="col-md-6 col-12 mx-auto ">
                               <h2>CREATE A NEW USER</h2>  
                       <hr>
-                      <form:form action="/admin/user/create" method="POST" modelAttribute="user">
-                          <div class="mb-3">
+                      <form:form action="/admin/user/create" method="POST" modelAttribute="user" class="row">
+                          <div class="mb-3 col-12 col-md-6">
                             <form:label for="inputEmail" class="form-label" path="email">Email:</form:label>
                             <form:input type="email" class="form-control" path="email"/>
                           </div>
-                          <div class="mb-3">
+                          <div class="mb-3 col-12 col-md-6">
                             <form:label for="inputPassword" class="form-label" path="password">Password:</form:label>
                             <form:input type="password" class="form-control" path="password"/>
                           </div>
-                          <div class="mb-3">
+                          <div class="mb-3 col-12 col-md-6">
                               <form:label for="inputFullName" class="form-label" path="fullName">Full Name:</form:label>
                               <form:input type="text" class="form-control" path="fullName"/>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 col-12 col-md-6">
                               <form:label for="inputPhoneNumber" class="form-label" path="telephone">Phone Number:</form:label>
                               <form:input type="text" class="form-control" path="telephone"/>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3 col-12 col-md-12">
                               <form:label for="inputAddress" class="form-label" path="address">Address:</form:label>
                               <form:input type="text" class="form-control" path="address"/>
                             </div>
-                          <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="mb-3 col-12 col-md-6">
+                              <label class="form-label">Role:</label>
+                              <select class="form-select" aria-label="Default select example">
+                                <option value="1">ADMIN</option>
+                                <option value="2">USER</option>
+                              </select>
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                              <label for="avatarFile" class="form-label">Avatar:</label>
+                              <input class="form-control" type="file" id="avatarFile"
+                                  accept=".png, .jpg, .jpeg">
+                          </div>
+                          <div class="col-12 mb-3">
+                            <img style="max-height: 250px; display: none;" alt="avatar preview"
+                                id="avatarPreview" />
+                          </div>
+                          <div class="col-12 mb-5">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
                         </form:form>
                           </div>
                       </div> 
