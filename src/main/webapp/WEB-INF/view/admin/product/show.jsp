@@ -22,11 +22,43 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                    <div>Product</div>
+                    <h1 class="mt-4">Laptopshop</h1>
+                    <div class="container mt-5">
+                        <div class="d-flex justify-content-between">
+                            <h2>Product list</h2>
+                            
+                            <a class="btn btn-primary" href="/admin/product/create">Create product</a>
+        
+                        </div>
+                        <hr>
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Factory</th>
+                                    <th>Action</th>  
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <c:forEach var="user" items="${users}">
+                                    <tr>
+                                        <td>${user.id}</td>
+                                        <td>${user.email}</td>
+                                        <td>${user.fullName}</td>
+                                        <td>${user.role.name}</td>
+                                        <td>
+                                            <a href="/admin/user/${user.id}" class="btn btn-success mx-2">View</a>
+                                            <a href="/admin/user/update/${user.id}" class="btn btn-warning mx-2">Update</a>
+                                            <a href="/admin/user/delete/${user.id}" class="btn btn-danger mx-2">Delete</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                             -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </main>
             <jsp:include page="../layout/footer.jsp" />
