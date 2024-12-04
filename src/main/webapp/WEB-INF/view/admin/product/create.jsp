@@ -46,27 +46,27 @@
                       enctype="multipart/form-data"
                       >
                           <div class="mb-3 col-12 col-md-6">
-                            <form:label for="nameProduct" class="form-label" path="name">Tên sản phẩm:</form:label>
+                            <form:label for="nameProduct" class="form-label" path="name">Name:</form:label>
                             <form:input type="text" class="form-control" path="name"/>
                           </div>
                           <div class="mb-3 col-12 col-md-6">
-                            <form:label for="inputPrice" class="form-label" path="price">Giá tiền:</form:label>
+                            <form:label for="inputPrice" class="form-label" path="price">Price:</form:label>
                             <form:input type="number" class="form-control" path="price"/>
                           </div>
                           <div class="mb-3 col-12">
-                              <form:label for="inputDescription" class="form-label" path="detailDesc">Chi tiết sản phẩm:</form:label>
+                              <form:label for="inputDescription" class="form-label" path="detailDesc">Description:</form:label>
                               <form:textarea type="text" class="form-control" path="detailDesc"/>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                              <form:label for="inputShortDesc" class="form-label" path="shortDesc">Tóm tắt về sản phẩm:</form:label>
+                              <form:label for="inputShortDesc" class="form-label" path="shortDesc">Short Description:</form:label>
                               <form:input type="text" class="form-control" path="shortDesc"/>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                              <form:label for="inputQuantity" class="form-label" path="quantity">Số lượng:</form:label>
+                              <form:label for="inputQuantity" class="form-label" path="quantity">Quantity:</form:label>
                               <form:input type="number" class="form-control" path="quantity"/>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                              <label class="form-label">Hãng sản xuất:</label>
+                              <label class="form-label">Factory:</label>
                               <form:select class="form-select" aria-label="Default select example" path="factory">
                                 <form:option value="APPLE">Apple (MacBook)</form:option>
                                 <form:option value="ASUS">Asus</form:option>
@@ -76,7 +76,7 @@
                               </form:select>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                                <label class="form-label">Mục đích:</label>
+                                <label class="form-label">Target:</label>
                                 <form:select class="form-select" path="target">
                                     <form:option value="GAMING">Gaming</form:option>
                                     <form:option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng
@@ -88,7 +88,7 @@
                                 </form:select>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                              <label for="avatarFile" class="form-label">Ảnh sản phẩm:</label>
+                              <label for="avatarFile" class="form-label">Image:</label>
                               <input class="form-control" type="file" id="avatarFile"
                                   accept=".png, .jpg, .jpeg"
                                   name="datntFile"
