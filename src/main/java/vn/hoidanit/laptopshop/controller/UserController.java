@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +54,11 @@ public class UserController {
     public String submit(@ModelAttribute("user") @Valid User user,
             BindingResult bindingResult,
             @RequestParam("datntFile") MultipartFile avatarFile) {
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+
         if (bindingResult.hasErrors()) {
             return "/admin/user/create";
         } else {
@@ -69,7 +75,7 @@ public class UserController {
     public String getTableUserPage(Model model) {
         List<User> users = this.userService.findAll();
         model.addAttribute("users", users);
-        return "admin/user/tableUsers";
+        return "admin/user/show";
     }
 
     @RequestMapping("/admin/user/{id}")
@@ -87,9 +93,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/user/update", method = RequestMethod.POST)
-    public String updateUser(@ModelAttribute("userUpdated") User afterUpdatedUser) {
-        this.userService.handleUpdateUser(afterUpdatedUser);
-        return "redirect:/admin/user";
+    public String updateUser(@ModelAttribute("userUpdated") @Valid User afterUpdatedUser,
+            BindingResult bindingResult) {
+
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>" + error.getField() + " - " + error.getDefaultMessage());
+        }
+        if (bindingResult.hasErrors()) {
+            return "/admin/user/update";
+        } else {
+            this.userService.handleUpdateUser(afterUpdatedUser);
+            return "redirect:/admin/user";
+        }
+
     }
 
     @GetMapping("/admin/user/delete/{id}")

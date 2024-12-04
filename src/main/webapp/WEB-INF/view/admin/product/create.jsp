@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,16 +44,24 @@
                           <div class="col-md-6 col-12 mx-auto ">
                               <h2>CREATE A NEW PRODUCT</h2>  
                       <hr>
-                      <form:form action="/admin/user/create" method="POST" modelAttribute="newProduct" class="row"
-                      enctype="multipart/form-data"
-                      >
+                      <form:form action="/admin/product/create" method="POST" modelAttribute="newProduct" class="row"
+                      enctype="multipart/form-data">
                           <div class="mb-3 col-12 col-md-6">
+                            <c:set var="errorMsg">
+                              <form:errors path="name"/>
+                            </c:set>
                             <form:label for="nameProduct" class="form-label" path="name">Name:</form:label>
-                            <form:input type="text" class="form-control" path="name"/>
+                            <form:input type="text" class="form-control ${not empty errorMsg?'is-invalid' : ''}" path="name"/>
+                            <form:errors path="name" cssClass="invalid-feedback" />
                           </div>
                           <div class="mb-3 col-12 col-md-6">
+                            <c:set var="errorMsg">
+                              <form:errors path="price"/>
+                            </c:set>
                             <form:label for="inputPrice" class="form-label" path="price">Price:</form:label>
-                            <form:input type="number" class="form-control" path="price"/>
+                            <form:input type="number" class="form-control ${not empty errorMsg?'is-invalid' : ''}" path="price"/>
+                            <form:errors path="price" cssClass="invalid-feedback" />
+
                           </div>
                           <div class="mb-3 col-12">
                               <form:label for="inputDescription" class="form-label" path="detailDesc">Description:</form:label>
@@ -62,8 +72,13 @@
                               <form:input type="text" class="form-control" path="shortDesc"/>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
+                              <c:set var="errorMsg">
+                              <form:errors path="quantity"/>
+                            </c:set>
                               <form:label for="inputQuantity" class="form-label" path="quantity">Quantity:</form:label>
-                              <form:input type="number" class="form-control" path="quantity"/>
+                              <form:input type="number" class="form-control ${not empty errorMsg?'is-invalid' : ''}" path="quantity"/>
+                            <form:errors path="quantity" cssClass="invalid-feedback" />
+
                             </div>
                             <div class="mb-3 col-12 col-md-6">
                               <label class="form-label">Factory:</label>

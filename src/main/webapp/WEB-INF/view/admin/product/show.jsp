@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,28 +36,28 @@
                         <table class="table table-hover table-bordered">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Factory</th>
-                                    <th>Action</th>  
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Factory</th>
+                                    <th scope="col">Action</th>  
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <c:forEach var="user" items="${users}">
+                                <c:forEach var="product" items="${products}">
                                     <tr>
-                                        <td>${user.id}</td>
-                                        <td>${user.email}</td>
-                                        <td>${user.fullName}</td>
-                                        <td>${user.role.name}</td>
+                                        <td>${product.id}</td>
+                                        <td>${product.name}</td>
+                                        <td><fmt:formatNumber pattern="#,##0.00" value="${product.price}"/></td>
+                                        <td>${product.factory}</td>
                                         <td>
-                                            <a href="/admin/user/${user.id}" class="btn btn-success mx-2">View</a>
-                                            <a href="/admin/user/update/${user.id}" class="btn btn-warning mx-2">Update</a>
-                                            <a href="/admin/user/delete/${user.id}" class="btn btn-danger mx-2">Delete</a>
+                                            <a href="/admin/product/${product.id}" class="btn btn-success mx-2">View</a>
+                                            <a href="/admin/product/update/${product.id}" class="btn btn-warning mx-2">Update</a>
+                                            <a href="/admin/product/delete/${product.id}" class="btn btn-danger mx-2">Delete</a>
                                         </td>
                                     </tr>
                                 </c:forEach>
-                             -->
+                            
                             </tbody>
                         </table>
                     </div>
