@@ -1,6 +1,5 @@
 package vn.hoidanit.laptopshop.controller;
 
-import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
 import vn.hoidanit.laptopshop.service.RoleService;
 import vn.hoidanit.laptopshop.service.UploadFileService;
