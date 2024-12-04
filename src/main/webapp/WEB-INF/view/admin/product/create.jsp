@@ -36,47 +36,59 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Laptopshop</h1>
-                    <!-- <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">CREATE A NEW USER</li>
-                    </ol> -->
                     
                     <div class="container mt-5">
                       <div class="row">
                           <div class="col-md-6 col-12 mx-auto ">
-                              <h2>CREATE A NEW USER</h2>  
+                              <h2>CREATE A NEW PRODUCT</h2>  
                       <hr>
-                      <form:form action="/admin/user/create" method="POST" modelAttribute="user" class="row"
+                      <form:form action="/admin/user/create" method="POST" modelAttribute="newProduct" class="row"
                       enctype="multipart/form-data"
                       >
                           <div class="mb-3 col-12 col-md-6">
-                            <form:label for="inputEmail" class="form-label" path="email">Email:</form:label>
-                            <form:input type="email" class="form-control" path="email"/>
+                            <form:label for="nameProduct" class="form-label" path="name">Tên sản phẩm:</form:label>
+                            <form:input type="text" class="form-control" path="name"/>
                           </div>
                           <div class="mb-3 col-12 col-md-6">
-                            <form:label for="inputPassword" class="form-label" path="password">Password:</form:label>
-                            <form:input type="password" class="form-control" path="password"/>
+                            <form:label for="inputPrice" class="form-label" path="price">Giá tiền:</form:label>
+                            <form:input type="number" class="form-control" path="price"/>
                           </div>
-                          <div class="mb-3 col-12 col-md-6">
-                              <form:label for="inputFullName" class="form-label" path="fullName">Full Name:</form:label>
-                              <form:input type="text" class="form-control" path="fullName"/>
+                          <div class="mb-3 col-12">
+                              <form:label for="inputDescription" class="form-label" path="detailDesc">Chi tiết sản phẩm:</form:label>
+                              <form:textarea type="text" class="form-control" path="detailDesc"/>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                              <form:label for="inputPhoneNumber" class="form-label" path="telephone">Phone Number:</form:label>
-                              <form:input type="text" class="form-control" path="telephone"/>
-                            </div>
-                            <div class="mb-3 col-12 col-md-12">
-                              <form:label for="inputAddress" class="form-label" path="address">Address:</form:label>
-                              <form:input type="text" class="form-control" path="address"/>
+                              <form:label for="inputShortDesc" class="form-label" path="shortDesc">Tóm tắt về sản phẩm:</form:label>
+                              <form:input type="text" class="form-control" path="shortDesc"/>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                              <label class="form-label">Role:</label>
-                              <form:select class="form-select" aria-label="Default select example" path="role.name">
-                                <form:option value="ADMIN">ADMIN</form:option>
-                                <form:option value="USER">USER</form:option>
+                              <form:label for="inputQuantity" class="form-label" path="quantity">Số lượng:</form:label>
+                              <form:input type="number" class="form-control" path="quantity"/>
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                              <label class="form-label">Hãng sản xuất:</label>
+                              <form:select class="form-select" aria-label="Default select example" path="factory">
+                                <form:option value="APPLE">Apple (MacBook)</form:option>
+                                <form:option value="ASUS">Asus</form:option>
+                                <form:option value="LENOVO">Lenovo</form:option>
+                                <form:option value="DELL">Dell</form:option>
+                                <form:option value="LG">LG</form:option>
                               </form:select>
                             </div>
                             <div class="mb-3 col-12 col-md-6">
-                              <label for="avatarFile" class="form-label">Avatar:</label>
+                                <label class="form-label">Mục đích:</label>
+                                <form:select class="form-select" path="target">
+                                    <form:option value="GAMING">Gaming</form:option>
+                                    <form:option value="SINHVIEN-VANPHONG">Sinh viên - Văn phòng
+                                    </form:option>
+                                    <form:option value="THIET-KE-DO-HOA">Thiết kế đồ họa
+                                    </form:option>
+                                    <form:option value="MONG-NHE">Mỏng nhẹ</form:option>
+                                    <form:option value="DOANH-NHAN">Doanh nhân</form:option>
+                                </form:select>
+                            </div>
+                            <div class="mb-3 col-12 col-md-6">
+                              <label for="avatarFile" class="form-label">Ảnh sản phẩm:</label>
                               <input class="form-control" type="file" id="avatarFile"
                                   accept=".png, .jpg, .jpeg"
                                   name="datntFile"
