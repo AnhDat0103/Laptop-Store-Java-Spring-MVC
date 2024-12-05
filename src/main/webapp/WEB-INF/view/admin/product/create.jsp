@@ -113,8 +113,9 @@
                             <img style="max-height: 250px; display: none;" alt="avatar preview"
                                 id="avatarPreview" />
                           </div>
-                          <div class="col-12 mb-5">
+                          <div class="d-flex justify-content-between">
                             <button type="submit" class="btn btn-primary">Create</button>
+                            <a href="/admin/product" class="btn btn-secondary mx-3">Cancel</a> 
                         </div>
                         </form:form>
                           </div>

@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,6 +57,54 @@ public class ProductController {
             this.productService.handleSaveProduct(product);
             return "redirect:/admin/product";
         }
+    }
+
+    @GetMapping("/admin/product/show/{id}")
+    public String showDetailProduct(Model model, @PathVariable long id) {
+        Product product = this.productService.handleFindById(id);
+        model.addAttribute("product", product);
+        return "admin/product/product-detail";
+    }
+
+    @GetMapping("/admin/product/update/{id}")
+    public String showUpdateProductPage(Model model, @PathVariable long id) {
+        Product product = this.productService.handleFindById(id);
+        model.addAttribute("productUpdate", product);
+        return "admin/product/update";
+    }
+
+    @PostMapping("/admin/product/update")
+    public String updateProduct(@ModelAttribute("productUpdate") @Valid Product product,
+            BindingResult bindingResult, @RequestParam("datntFile") MultipartFile multipartFile) {
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println(">>>" + error.getField() + ": " + error.getDefaultMessage());
+        }
+        if (bindingResult.hasErrors()) {
+            return "/admin/product/update/{id}";
+        } else {
+            this.uploadFileService.handedRemoveFile(product.getImage(), "product");
+            product.setImage(this.uploadFileService.handleUploadFile(multipartFile, "product"));
+            this.productService.handleUpdateProduct(product);
+            return "redirect:/admin/product";
+        }
+
+    }
+
+    @GetMapping("/admin/product/delete/{id}")
+    public String getRemoveProductPage(Model model, @PathVariable long id) {
+        Product product = this.productService.handleFindById(id);
+        model.addAttribute("deleteProduct", product);
+        return "admin/product/delete";
+    }
+
+    @PostMapping("/admin/product/delete")
+    public String removeProduct(@ModelAttribute("deleteProduct") Product product) {
+        if (product != null) {
+            this.productService.handleRemoveProduct(product.getId());
+        }
+        return "redirect:/admin/product";
+
     }
 
 }

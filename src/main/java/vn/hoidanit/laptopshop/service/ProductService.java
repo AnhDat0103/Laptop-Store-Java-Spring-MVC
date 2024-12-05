@@ -31,4 +31,25 @@ public class ProductService {
         return product;
     }
 
+    public Product handleFindById(long id) {
+        Product product = this.productRepository.findById(id);
+        System.out.println(product);
+        return product;
+    }
+
+    public void handleRemoveProduct(long id) {
+        this.productRepository.deleteById(id);
+    }
+
+    public void handleUpdateProduct(Product updatedProduct) {
+        Product currentProduct = this.productRepository.findById(updatedProduct.getId());
+        currentProduct.setName(updatedProduct.getName());
+        currentProduct.setPrice(updatedProduct.getPrice());
+        currentProduct.setDetailDesc(updatedProduct.getDetailDesc());
+        currentProduct.setFactory(updatedProduct.getFactory());
+        currentProduct.setQuantity(updatedProduct.getQuantity());
+        currentProduct.setImage(updatedProduct.getImage());
+        this.productRepository.save(currentProduct);
+    }
+
 }

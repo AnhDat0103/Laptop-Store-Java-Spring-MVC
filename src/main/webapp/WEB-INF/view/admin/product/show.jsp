@@ -51,7 +51,7 @@
                                         <td><fmt:formatNumber pattern="#,##0.00" value="${product.price}"/></td>
                                         <td>${product.factory}</td>
                                         <td>
-                                            <a href="/admin/product/${product.id}" class="btn btn-success mx-2">View</a>
+                                            <a href="/admin/product/show/${product.id}" class="btn btn-success mx-2">View</a>
                                             <a href="/admin/product/update/${product.id}" class="btn btn-warning mx-2">Update</a>
                                             <a href="/admin/product/delete/${product.id}" class="btn btn-danger mx-2">Delete</a>
                                         </td>

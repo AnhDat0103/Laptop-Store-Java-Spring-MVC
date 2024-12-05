@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.ServletContext;
@@ -43,6 +45,17 @@ public class UploadFileService {
 
         return nameFile;
 
+    }
+
+    public void handedRemoveFile(String fileName, String targetDir) {
+        String rootPath = this.servletContext.getRealPath("/resources/images/" + targetDir + "/");
+
+        File deleteFile = new File(rootPath + fileName);
+        if (deleteFile.exists()) {
+            deleteFile.delete();
+        } else {
+            System.out.println("file not found.");
+        }
     }
 
 }
