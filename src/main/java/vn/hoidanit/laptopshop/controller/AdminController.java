@@ -11,4 +11,14 @@ public class AdminController {
         return "admin/dashboard/show";
     }
 
+    @GetMapping("/admin/register")
+    public String getRegisterPage() {
+        return "admin/auth/register";
+    }
+
+    @GetMapping("/admin/login")
+    public String getLoginPage() {
+        return "admin/auth/login";
+    }
+
 }
