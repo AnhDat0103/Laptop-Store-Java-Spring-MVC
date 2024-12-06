@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import jakarta.validation.Valid;
+import vn.hoidanit.laptopshop.domain.Role;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.domain.dto.UserDTO;
 import vn.hoidanit.laptopshop.repository.UserRepository;
 
 @Service
@@ -48,6 +51,22 @@ public class UserService {
 
     public void removeUserById(long id) {
         this.userRepository.deleteById(id);
+    }
+
+    public boolean handleCheckEmail(String email) {
+        return this.userRepository.existsByEmail(email);
+    }
+
+    public User handleConvertToUser(UserDTO userDTO) {
+        User user = new User();
+        if (userDTO.getLastName() != null) {
+            user.setFullName(userDTO.getFirstName() + " " + userDTO.getLastName());
+        } else {
+            user.setFullName(userDTO.getFirstName());
+        }
+        user.setPassword(userDTO.getPassword());
+        user.setEmail(userDTO.getEmail());
+        return user;
     }
 
 }

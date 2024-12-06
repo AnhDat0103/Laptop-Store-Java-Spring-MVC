@@ -9,12 +9,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import vn.hoidanit.laptopshop.service.validate.StrongPassword;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -30,7 +33,8 @@ public class User {
     private String email;
 
     @NotNull
-    @Size(min = 3, message = "Password be least 3 letter")
+    @Size(min = 3, message = "Password be least 3 letters")
+    @StrongPassword
     private String password;
     private String address;
     private String telephone;

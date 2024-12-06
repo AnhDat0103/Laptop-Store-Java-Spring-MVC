@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,46 +23,62 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
-                                        <form>
+                                        <form:form action="/admin/register" method="POST" modelAttribute="user">
+                                            <c:set var="errorFirstName">
+                                                <form:errors path="firstName" cssClass="invalid-feedback"/>
+                                            </c:set>
+                                            <c:set var="errorEmail">
+                                                <form:errors path="email" cssClass="invalid-feedback"/>
+                                            </c:set>
+                                            <c:set var="errorConfirmPass">
+                                                <form:errors path="confirmPassword" cssClass="invalid-feedback"/>
+                                            </c:set>
+                                            <c:set var="errorPass">
+                                                <form:errors path="password" cssClass="invalid-feedback"/>
+                                            </c:set>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" />
+                                                        <form:input class="form-control ${not empty errorFirstName ? 'is-invalid' : ''}" id="inputFirstName" type="text" placeholder="Enter your first name" path="firstName" />
                                                         <label for="inputFirstName">First name</label>
+                                                        ${errorFirstName}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating">
-                                                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" />
+                                                        <form:input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" path="lastName" />
                                                         <label for="inputLastName">Last name</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                                <form:input class="form-control ${not empty errorEmail ? 'is-invalid' : ''}" id="inputEmail" type="email" placeholder="name@example.com"  path="email"/>
                                                 <label for="inputEmail">Email address</label>
+                                                ${errorEmail}
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPassword" type="password" placeholder="Create a password" />
+                                                        <form:input class="form-control ${not empty errorPass ? 'is-invalid': ''}" id="inputPassword" type="password" placeholder="Create a password" path="password" />
                                                         <label for="inputPassword">Password</label>
+                                                        ${errorPass}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
+                                                        <form:input class="form-control ${not empty errorConfirmPass ? 'is-invalid' : ''}" id="inputPasswordConfirm" type="password" placeholder="Confirm password" path="confirmPassword"/>
                                                         <label for="inputPasswordConfirm">Confirm Password</label>
+                                                        ${errorConfirmPass}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid"><a class="btn btn-primary btn-block" href="login.html">Create Account</a></div>
+                                                <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">Create Account</button></div>
                                             </div>
-                                        </form>
+                                        </form:form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="login.html">Have an account? Go to login</a></div>
+                                        <div class="small"><a href="/admin/login">Have an account? Go to login</a></div>
                                     </div>
                                 </div>
                             </div>
