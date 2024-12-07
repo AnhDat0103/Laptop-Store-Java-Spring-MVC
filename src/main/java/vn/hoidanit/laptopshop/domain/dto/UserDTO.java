@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import vn.hoidanit.laptopshop.service.validate.RegisterCheck;
-import vn.hoidanit.laptopshop.service.validate.StrongPassword;
 
 @RegisterCheck
 public class UserDTO {
@@ -21,7 +20,7 @@ public class UserDTO {
 
     @NotNull
     @Size(min = 3, message = "Password be least 3 letters")
-    @StrongPassword
+    // @StrongPassword
     private String password;
 
     @NotNull
