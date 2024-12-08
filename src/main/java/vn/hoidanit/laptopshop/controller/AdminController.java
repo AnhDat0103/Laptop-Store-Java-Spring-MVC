@@ -35,14 +35,14 @@ public class AdminController {
     @GetMapping("/register")
     public String getRegisterPage(Model model) {
         model.addAttribute("user", new UserDTO());
-        return "admin/auth/register";
+        return "client/auth/register";
     }
 
     @PostMapping("/register")
     public String toRegistration(@ModelAttribute("user") @Valid UserDTO userDTO,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "admin/auth/register";
+            return "client/auth/register";
         } else {
             User newUser = this.userService.handleConvertToUser(userDTO);
             newUser.setPassword(this.passwordEncoder.encode(newUser.getPassword()));
@@ -54,7 +54,7 @@ public class AdminController {
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "admin/auth/login";
+        return "client/auth/login";
     }
 
 }
