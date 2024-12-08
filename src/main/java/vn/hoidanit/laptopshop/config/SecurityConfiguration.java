@@ -35,6 +35,11 @@ public class SecurityConfiguration {
         }
 
         @Bean
+        public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+                return new MySimpleUrlAuthenticationSuccessHandler();
+        }
+
+        @Bean
         DaoAuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder,
                         UserDetailsService userDetailsService) {
                 DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -42,11 +47,6 @@ public class SecurityConfiguration {
                 authenticationProvider.setPasswordEncoder(passwordEncoder);
                 authenticationProvider.setHideUserNotFoundExceptions(false);
                 return authenticationProvider;
-        }
-
-        @Bean
-        public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-                return new MySimpleUrlAuthenticationSuccessHandler();
         }
 
         @Bean
@@ -67,7 +67,11 @@ public class SecurityConfiguration {
                                                 .failureUrl("/login?error")
                                                 .permitAll()
 
-                                );
+                                )
+                                .logout((logout) -> logout
+                                                .logoutSuccessUrl("/")
+                                                .permitAll());
+
                 return httpSecurity.build();
         }
 

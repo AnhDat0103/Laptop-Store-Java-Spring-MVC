@@ -36,6 +36,9 @@
                                             <c:if test="${param.error != null}">
                                                 <div class="my-2" style="color: red;">Invalid email or password.</div>
                                             </c:if>
+                                            <c:if test="${param.logout != null}">
+                                                <div class="my-2" style="color: green;">Logout successful.</div>
+                                            </c:if>
                                                                               
                                             <div class="form-check mb-3">
                                                 <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
