@@ -62,4 +62,9 @@ public class AdminController {
         return "client/auth/login";
     }
 
+    @GetMapping("/access-denied")
+    public String getDeniedPage() {
+        return "client/auth/accessDenied";
+    }
+
 }
