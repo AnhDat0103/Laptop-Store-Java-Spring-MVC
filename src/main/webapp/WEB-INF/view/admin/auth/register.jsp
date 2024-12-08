@@ -23,7 +23,7 @@
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
-                                        <form:form action="/admin/register" method="POST" modelAttribute="user">
+                                        <form:form action="/register" method="POST" modelAttribute="user">
                                             <c:set var="errorFirstName">
                                                 <form:errors path="firstName" cssClass="invalid-feedback"/>
                                             </c:set>
@@ -78,7 +78,7 @@
                                         </form:form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="/admin/login">Have an account? Go to login</a></div>
+                                        <div class="small"><a href="/login">Have an account? Go to login</a></div>
                                     </div>
                                 </div>
                             </div>

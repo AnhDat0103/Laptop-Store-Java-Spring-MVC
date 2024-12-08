@@ -32,27 +32,27 @@ public class AdminController {
         return "admin/dashboard/show";
     }
 
-    @GetMapping("/admin/register")
+    @GetMapping("/register")
     public String getRegisterPage(Model model) {
         model.addAttribute("user", new UserDTO());
         return "admin/auth/register";
     }
 
-    @PostMapping("/admin/register")
+    @PostMapping("/register")
     public String toRegistration(@ModelAttribute("user") @Valid UserDTO userDTO,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/admin/auth/register";
+            return "admin/auth/register";
         } else {
             User newUser = this.userService.handleConvertToUser(userDTO);
             newUser.setPassword(this.passwordEncoder.encode(newUser.getPassword()));
             newUser.setRole(this.roleService.handleGetRoleByName("USER"));
             this.userService.handleSaveUser(newUser);
-            return "redirect:/admin/login";
+            return "redirect:/login";
         }
     }
 
-    @GetMapping("/admin/login")
+    @GetMapping("/login")
     public String getLoginPage() {
         return "admin/auth/login";
     }

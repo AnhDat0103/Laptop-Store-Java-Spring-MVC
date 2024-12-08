@@ -33,9 +33,11 @@
                                   <h2>Update user id = ${userUpdated.id}</h2>  
                           <hr>
                           <form:form action="/admin/user/update" method="POST" modelAttribute="userUpdated">
+                              <form:hidden path="email" />
+                              <form:hidden path="password" />
                               <div class="mb-3">
-                                  <form:label for="inputEmail" class="form-label" path="email">Email:</form:label>
-                                  <form:input type="email" class="form-control" path="email" disabled="true"/>
+                                  <label for="inputEmail" class="form-label" path="email">Email:</label>
+                                  <input type="email" class="form-control" value="${userUpdated.email}" disabled="true"/>
                                 </div>
                                 <div class="mb-3" style="display: none;">
                                   <form:label for="inputId" class="form-label" path="id">ID:</form:label>

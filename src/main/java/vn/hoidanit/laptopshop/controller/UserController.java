@@ -60,7 +60,7 @@ public class UserController {
         }
 
         if (bindingResult.hasErrors()) {
-            return "/admin/user/create";
+            return "admin/user/create";
         } else {
             user.setPassword(this.passwordEncoder.encode(user.getPassword()));
             user.setAvatar(this.uploadFileService.handleUploadFile(avatarFile, "avatar"));
@@ -101,7 +101,7 @@ public class UserController {
             System.out.println(">>>" + error.getField() + " - " + error.getDefaultMessage());
         }
         if (bindingResult.hasErrors()) {
-            return "/admin/user/update";
+            return "admin/user/update-info-user";
         } else {
             this.userService.handleUpdateUser(afterUpdatedUser);
             return "redirect:/admin/user";
