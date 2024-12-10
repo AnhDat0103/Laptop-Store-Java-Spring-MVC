@@ -95,9 +95,15 @@
                                                     <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                         <h4 style="font-size: 15px;"><a href="/client/product/${product.id}">${product.name}</a></h4>
                                                         <p style="font-size: 13px;">${product.shortDesc}</p>
-                                                        <div class="d-flex justify-content-between flex-lg-wrap"> 
+                                                        <div class="d-flex justify-content-center flex-lg-wrap"> 
                                                             <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fs-5 fw-bold mb-0"><fmt:formatNumber value="${product.price}"/> đ</p>
-                                                            <a style="text-align: center; width: 100%;" href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                            <form action="/add-to-cart/${product.id}" method="POST">
+                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                                <button style="text-align: center; width: 100%;" type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                     Add to cart
+                                                                </button>    
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>

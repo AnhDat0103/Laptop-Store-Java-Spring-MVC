@@ -60,6 +60,9 @@ public class MySimpleUrlAuthenticationSuccessHandler implements AuthenticationSu
         }
         session.setAttribute("fullName", this.userService.findByEmail(authentication.getName()).getFullName());
         session.setAttribute("avatar", this.userService.findByEmail(authentication.getName()).getAvatar());
+        long sum = (this.userService.findByEmail(authentication.getName()).getCart() == null) ? 0
+                : this.userService.findByEmail(authentication.getName()).getCart().getSum();
+        session.setAttribute("sum", sum);
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
     }
 
