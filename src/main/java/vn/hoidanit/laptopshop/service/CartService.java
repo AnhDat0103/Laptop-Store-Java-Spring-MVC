@@ -1,5 +1,7 @@
 package vn.hoidanit.laptopshop.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
@@ -25,42 +27,78 @@ public class CartService {
     }
 
     public void handleSaveToCart(HttpSession session, User currentUser, long productId) {
-        Cart oldCart = currentUser.getCart();
-        CartDetail newCartDetail = new CartDetail();
+        Product product = validateAndGetProduct(productId);
+        Cart cart = getOrCreateCart(currentUser);
+        updateCartDetails(cart, product, session);
+
+    }
+
+    private Product validateAndGetProduct(long productId) {
         Product product = this.productService.handleFindById(productId);
-        long sum = 0;
-        if (oldCart == null) {
-            oldCart = new Cart();
-            oldCart.setUser(currentUser);
-            oldCart.setSum(1);
-            if (product != null) {
-                newCartDetail.setCart(oldCart);
-                newCartDetail.setProduct(product);
-                newCartDetail.setQuantity(1);
-                newCartDetail.setPrice(product.getPrice());
-            }
-            this.cartRepository.save(oldCart);
-            this.cartDetailRepository.save(newCartDetail);
-            session.setAttribute("sum", sum + 1);
+        if (product == null) {
+            throw new IllegalArgumentException("Product not found with ID: " + productId);
+        }
+        return product;
+    }
+
+    private Cart getOrCreateCart(User currentUser) {
+        Cart cart = currentUser.getCart();
+        if (cart == null) {
+            cart = new Cart();
+            cart.setUser(currentUser);
+            cart.setSum(0);
+            cartRepository.save(cart);
+        }
+        return cart;
+    }
+
+    private void updateCartDetails(Cart cart, Product product, HttpSession session) {
+        CartDetail cartDetail = cartDetailRepository.findByCartAndProduct(cart, product).orElse(null);
+
+        if (cartDetail == null) {
+            cartDetail = createNewCartDetail(cart, product);
+            cart.setSum(cart.getSum() + 1);
         } else {
-            CartDetail cartDetailOptional = this.cartDetailRepository.findByCartAndProduct(oldCart, product)
-                    .orElse(null);
-            if (cartDetailOptional != null) {
-                cartDetailOptional.setQuantity(cartDetailOptional.getQuantity() + 1);
-            } else {
-                cartDetailOptional = new CartDetail();
-                cartDetailOptional.setCart(oldCart);
-                cartDetailOptional.setProduct(product);
-                cartDetailOptional.setQuantity(1);
-                cartDetailOptional.setPrice(product.getPrice());
-                oldCart.setSum(oldCart.getSum() + 1);
-                sum = (long) session.getAttribute("sum");
-                session.setAttribute("sum", sum + 1);
-            }
-            this.cartRepository.save(oldCart);
-            this.cartDetailRepository.save(cartDetailOptional);
+            cartDetail.setQuantity(cartDetail.getQuantity() + 1);
         }
 
+        cartRepository.save(cart);
+        cartDetailRepository.save(cartDetail);
+
+        updateSessionCartSum(session, 1);
+    }
+
+    private CartDetail createNewCartDetail(Cart cart, Product product) {
+        CartDetail cartDetail = new CartDetail();
+        cartDetail.setCart(cart);
+        cartDetail.setProduct(product);
+        cartDetail.setQuantity(1);
+        cartDetail.setPrice(product.getPrice());
+        return cartDetail;
+    }
+
+    private void updateSessionCartSum(HttpSession session, int increment) {
+        long currentSum = session.getAttribute("sum") != null ? (long) session.getAttribute("sum") : 0;
+        session.setAttribute("sum", currentSum + increment);
+    }
+
+    public List<CartDetail> findAllCartDetails(Cart cart, HttpSession session) {
+        List<CartDetail> cartDetails = this.cartDetailRepository.findAllByCart(cart);
+        double totalPice = 0;
+        for (CartDetail cartDetail : cartDetails) {
+            totalPice += cartDetail.getPrice() * cartDetail.getQuantity();
+        }
+        session.setAttribute("totalPrice", totalPice);
+        return cartDetails;
+
+    }
+
+    public Cart handleFindCartById(long id) {
+        return this.cartRepository.findById(id);
+    }
+
+    public Cart handleFindCartByUser(User user) {
+        return this.cartRepository.findByUser(user);
     }
 
 }
