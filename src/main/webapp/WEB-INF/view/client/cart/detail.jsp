@@ -144,7 +144,7 @@
                         </div>
                         <c:if test="${not empty cartDetails}">
                             <div class="mt-5 row g-4 justify-content-start">
-                                <div class="col-12 col-md-8">
+                                <div class="col-12 col-md-7">
                                     <div class="bg-light rounded">
                                         <div class="p-4">
                                             <h1 class="display-6 mb-4">Thông Tin <span class="fw-normal">Đơn Hàng</span>
@@ -168,11 +168,35 @@
                                                 <fmt:formatNumber type="number" value="${totalPrice}" /> đ
                                             </p>
                                         </div>
-                                        <button
+                                        <button id="confirm-btn" onclick="showFormInputInfor(this)"
                                             class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
                                             type="button">Xác nhận đặt hàng</button>
                                     </div>
                                 </div>
+
+                                <div id="form-input-infor" class="col-12 col-md-5" style="display: none;">
+                                    <div class="bg-light rounded">
+                                        <div class="p-4">
+                                            <div hidden>
+                                                <c:forEach var="cartDetail" items="${cartDetails}">
+                                                    <div>
+                                                        <input type="text" value="${cartDetail.id}"/>
+                                                        <input type="number" value="${cartDetail.quantity}">
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
+                                            <h5 class="mb-0 me-4">Họ và tên người nhận:</h5>
+                                            <input class="form-control mb-4 mt-2" type="text" value="Hãy nhập thông tin tại đây..." aria-label="readonly input example" readonly>
+                                            <h5 class="mb-0 me-4">Địa chỉ nhận hàng:</h5>
+                                            <input class="form-control mb-4 mt-2" type="text" value="Hãy nhập thông tin tại đây..." aria-label="readonly input example" readonly>
+                                            <h5 class="mb-0 me-4">Số điện thoại:</h5>
+                                            <input class="form-control mb-4 mt-2" type="text" value="Hãy nhập thông tin tại đây..." aria-label="readonly input example" readonly>
+                                            <button
+                                            class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase"
+                                            type="submit">Đặt hàng</button>
+                                        </div>
+                                    </div>  
+                                </div>  
                             </div>
                         </c:if>
                     </div>
@@ -198,6 +222,15 @@
 
                 <!-- Template Javascript -->
                 <script src="/client/js/main.js"></script>
+                <script>
+                    let confirmBtn = document.querySelector('#confirm-btn');
+                     function showFormInputInfor(){
+                        let formInputInfor = document.getElementById('form-input-infor');
+                        formInputInfor.style.display = 'block';
+
+                    }
+
+                </script>
             </body>
 
             </html>
