@@ -54,4 +54,11 @@ public class CartController {
         model.addAttribute("cartDetails", cartDetails);
         return "client/cart/detail";
     }
+
+    @PostMapping("/remove-from-cart/{cartDetailId}")
+    public String removeProductFromCart(@PathVariable long cartDetailId, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        this.cartService.handleRemoveFromCart(session, cartDetailId);
+        return "redirect:/cart-details";
+    }
 }

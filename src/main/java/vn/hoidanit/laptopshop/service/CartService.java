@@ -1,6 +1,7 @@
 package vn.hoidanit.laptopshop.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -58,6 +59,7 @@ public class CartService {
         if (cartDetail == null) {
             cartDetail = createNewCartDetail(cart, product);
             cart.setSum(cart.getSum() + 1);
+            updateSessionCartSum(session, 1);
         } else {
             cartDetail.setQuantity(cartDetail.getQuantity() + 1);
         }
@@ -65,7 +67,6 @@ public class CartService {
         cartRepository.save(cart);
         cartDetailRepository.save(cartDetail);
 
-        updateSessionCartSum(session, 1);
     }
 
     private CartDetail createNewCartDetail(Cart cart, Product product) {
@@ -78,7 +79,7 @@ public class CartService {
     }
 
     private void updateSessionCartSum(HttpSession session, int increment) {
-        long currentSum = session.getAttribute("sum") != null ? (long) session.getAttribute("sum") : 0;
+        long currentSum = session.getAttribute("sum") != null ? ((Number) session.getAttribute("sum")).longValue() : 0;
         session.setAttribute("sum", currentSum + increment);
     }
 
@@ -99,6 +100,21 @@ public class CartService {
 
     public Cart handleFindCartByUser(User user) {
         return this.cartRepository.findByUser(user);
+    }
+
+    public void handleRemoveFromCart(HttpSession session, long cartDetailId) {
+        Optional<CartDetail> cartDetail = this.cartDetailRepository.findById(cartDetailId);
+        if (cartDetail != null) {
+            Cart cart = cartDetail.get().getCart();
+            this.cartDetailRepository.deleteById(cartDetailId);
+            if (cart.getCartDetails().size() == 0) {
+                this.cartRepository.delete(cart);
+                session.setAttribute("sum", (long) 0);
+            } else {
+                cart.setSum((long) cart.getCartDetails().size());
+                session.setAttribute("sum", (long) cart.getCartDetails().size());
+            }
+        }
     }
 
 }
