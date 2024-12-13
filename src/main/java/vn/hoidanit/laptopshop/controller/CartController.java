@@ -1,11 +1,13 @@
 package vn.hoidanit.laptopshop.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -52,6 +54,8 @@ public class CartController {
         Cart cart = this.cartService.handleFindCartByUser(user);
         List<CartDetail> cartDetails = this.cartService.findAllCartDetails(cart, session);
         model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("cart", cart);
+
         return "client/cart/detail";
     }
 
@@ -60,5 +64,27 @@ public class CartController {
         HttpSession session = request.getSession(false);
         this.cartService.handleRemoveFromCart(session, cartDetailId);
         return "redirect:/cart-details";
+    }
+
+    @PostMapping("/confirm-checkout")
+    public String getCheckOutPage(@ModelAttribute("cart") Cart cart) {
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<CartDetail>() : cart.getCartDetails();
+        this.cartService.handleUpdateCartBeforeCheckout(cartDetails);
+        return "redirect:/check-out";
+    }
+
+    @GetMapping("/check-out")
+    public String getCheckoutPage(Model model, Authentication authentication) {
+        User currentUser = this.userService.findByEmail(authentication.getName());
+        Cart cart = this.cartService.handleFindCartByUser(currentUser);
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<>() : cart.getCartDetails();
+
+        double totalPrice = 0;
+        for (CartDetail cd : cartDetails) {
+            totalPrice += cd.getPrice() * cd.getQuantity();
+        }
+        model.addAttribute("cartDetails", cartDetails);
+        model.addAttribute("totalPrice", totalPrice);
+        return "client/cart/check-out";
     }
 }

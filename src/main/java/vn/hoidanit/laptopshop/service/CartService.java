@@ -117,4 +117,15 @@ public class CartService {
         }
     }
 
+    public void handleUpdateCartBeforeCheckout(List<CartDetail> cartDetails) {
+        for (CartDetail cd : cartDetails) {
+            Optional<CartDetail> currentCartDetail = this.cartDetailRepository.findById(cd.getId());
+            if (currentCartDetail.isPresent()) {
+                currentCartDetail.get().setQuantity(cd.getQuantity());
+                this.cartDetailRepository.save(currentCartDetail.get());
+            }
+
+        }
+    }
+
 }
