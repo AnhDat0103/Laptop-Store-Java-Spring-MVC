@@ -71,4 +71,8 @@ public class UserService {
         return this.userRepository.findOneByEmail(email);
     }
 
+    public long getCount() {
+        return this.userRepository.count();
+    }
+
 }

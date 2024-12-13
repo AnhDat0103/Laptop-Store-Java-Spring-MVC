@@ -52,4 +52,8 @@ public class ProductService {
         this.productRepository.save(currentProduct);
     }
 
+    public long getCount() {
+        return this.productRepository.count();
+    }
+
 }

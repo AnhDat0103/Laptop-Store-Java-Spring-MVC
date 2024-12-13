@@ -24,7 +24,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Laptopshop</h1>
+
                     <div class="container mt-5">
                         <div class="d-flex justify-content-between">
                             <h2>Product list</h2>

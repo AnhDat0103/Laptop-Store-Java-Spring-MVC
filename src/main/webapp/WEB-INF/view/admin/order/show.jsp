@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,12 +24,52 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                    <div>order</div>
+                    <div class="container mt-5">
+                        <div class="d-flex justify-content-between">
+                            <h2>Order list</h2>
+                            
+                            <a class="btn btn-primary" href="/admin/order/create">Create order</a>
+        
+                        </div>
+                        <hr>
+                        <c:forEach var="order" items="${orders}">
+                            <form action="/admin/order/delete/${order.id}" method="POST" >
+                                <input type="hidden" name="${_csrf.parameterName}"
+                                                    value="${_csrf.token}" />
+                                <div class="d-flex justify-content-between">
+                                    <h2>Đơn hàng số ${order.id}</h2>
+                                    <button type="submit" class="btn btn-danger my-1 mx-1">Delete</button>
+                                </div>
+
+                            </form>
+
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Product</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="orderDetail" items="${order.orderDetails}">
+                                            <tr>
+                                                <td>${orderDetail.id}</td>
+                                                <td>${orderDetail.product.name}</td>
+                                                <td>${orderDetail.quantity}</td>
+                                                <td><fmt:formatNumber pattern="#,##0.00" value="${orderDetail.price * orderDetail.quantity}"/></td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            <hr>
+                        </c:forEach>
+
+                    </div>
+                    
                 </div>
+                <hr>
             </main>
             <jsp:include page="../layout/footer.jsp" />
         </div>

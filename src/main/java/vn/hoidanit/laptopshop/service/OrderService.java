@@ -2,6 +2,7 @@ package vn.hoidanit.laptopshop.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -81,6 +82,25 @@ public class OrderService {
             }
 
         }
+    }
+
+    public long getCount() {
+        return this.orderRepository.count();
+    }
+
+    public void handleDeleteOrder(long id) {
+        Optional<Order> order = this.orderRepository.findById(id);
+        if (order != null) {
+            List<OrderDetail> orderDetails = this.orderDetailRepository.findAllByOrder(order.get());
+            for (OrderDetail od : orderDetails) {
+                this.orderDetailRepository.delete(od);
+            }
+            this.orderRepository.delete(order.get());
+        }
+    }
+
+    public List<Order> getAllOrders() {
+        return this.orderRepository.findAll();
     }
 
 }
