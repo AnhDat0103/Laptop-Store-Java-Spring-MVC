@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +66,7 @@ public class CartController {
         return "client/cart/detail";
     }
 
-    @PostMapping("/remove-from-cart/{cartDetailId}")
+    @PostMapping("/delete-cart-product/{cartDetailId}")
     public String removeProductFromCart(@PathVariable long cartDetailId, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         this.cartService.handleRemoveFromCart(session, cartDetailId);
@@ -96,21 +97,31 @@ public class CartController {
     }
 
     @PostMapping("/place-order")
-    public String placeOrder(@ModelAttribute("order") @Valid OrderDTO orderDTO, BindingResult bindingResult,
+    public String placeOrder(Model model, @ModelAttribute("order") @Valid OrderDTO orderDTO,
+            BindingResult bindingResult,
             Authentication authentication, HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession(false);
+        User currentUser = this.userService.findByEmail(authentication.getName());
+        Cart cart = this.cartService.handleFindCartByUser(currentUser);
+        List<CartDetail> cartDetails = cart == null ? new ArrayList<>() : cart.getCartDetails();
+
+        double totalPrice = 0;
+        for (CartDetail cd : cartDetails) {
+            totalPrice += cd.getPrice() * cd.getQuantity();
+        }
         if (bindingResult.hasErrors()) {
+            model.addAttribute("cartDetails", cartDetails);
+            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("order", orderDTO);
             return "client/cart/check-out";
         } else {
-            User currentUser = this.userService.findByEmail(authentication.getName());
-            Cart cart = this.cartService.handleFindCartByUser(currentUser);
             if (currentUser == null || cart == null) {
                 System.out.println("Can not place order.");
             }
             this.orderService.handleSaveOrder(orderDTO, currentUser, cart, session);
+            session.removeAttribute("cart");
             return "redirect:/";
         }
-
     }
 
 }

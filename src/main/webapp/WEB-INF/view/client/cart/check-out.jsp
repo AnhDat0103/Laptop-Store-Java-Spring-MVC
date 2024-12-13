@@ -68,17 +68,9 @@
                                         <th scope="col">Giá cả</th>
                                         <th scope="col">Số lượng</th>
                                         <th scope="col">Thành tiền</th>
-                                        <th scope="col">Xử lý</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:if test="${ empty cartDetails}">
-                                        <tr>
-                                            <td colspan="6">
-                                                Không có sản phẩm trong giỏ hàng
-                                            </td>
-                                        </tr>
-                                    </c:if>
                                     <c:forEach var="cartDetail" items="${cartDetails}">
 
                                         <tr>
@@ -116,11 +108,9 @@
                                             </td>
                                         </tr>
                                     </c:forEach>
-
                                 </tbody>
                             </table>
                         </div>
-                        <c:if test="${not empty cartDetails}">
                             <div class="mt-5 row g-4 justify-content-start">
                                 <div class="col-12 col-md-7">
                                     <div class="bg-light rounded">
@@ -146,34 +136,31 @@
                                                 <fmt:formatNumber type="number" value="${totalPrice}" /> đ
                                             </p>
                                         </div>
-                                        <button id="confirm-btn"
-                                            class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-                                            type="submit">Xác nhận đặt hàng</button>
                                     </div>
                                 </div>
 
                                 <div id="form-input-infor" class="col-12 col-md-5">
                                     <div class="bg-light rounded">
                                         <form:form action="/place-order" method="POST" class="p-4" modelAttribute="order">
-                                            <c:set var="errorName">
-                                                <form:errors path="receiverName" cssClass="invalid-feedback"/>
-                                            </c:set>
-                                            <c:set var="errorAddress">
-                                                <form:errors path="receiverAddress" cssClass="invalid-feedback"/>
-                                            </c:set>
-                                            <c:set var="errorPhone">
-                                                <form:errors path="receiverPhone" cssClass="invalid-feedback"/>
-                                            </c:set>
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                            <h5 class="mb-0 me-4">Họ và tên người nhận:</h5>
-                                            <form:input id="inputReceiverName" class="form-control mb-4 mt-2 ${not empty errorName ? 'is-valid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverName"/>
-                                            ${errorName}
-                                            <h5 class="mb-0 me-4">Địa chỉ nhận hàng:</h5>
-                                            <form:input id="inputReceiveraddress" class="form-control mb-4 mt-2 ${not empty errorAddress ? 'is-valid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverAddress"/>
-                                            ${errorAddress}
-                                            <h5 class="mb-0 me-4">Số điện thoại:</h5>
-                                            <form:input id="inputReceiverPhoneNumber" class="form-control mb-4 mt-2 ${not empty errorPhone ? 'is-valid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverPhone"/>
-                                            ${errorPhone}
+                                            <c:set var="errorName">
+                                                <form:errors path="receiverName"/>
+                                              </c:set>
+                                              <c:set var="errorAddress">
+                                                <form:errors path="receiverAddress"/>
+                                              </c:set>
+                                              <c:set var="errorPhone">
+                                                <form:errors path="receiverPhone"/>
+                                              </c:set>
+                                            <label for="inputName" class="mb-0 me-4">Họ và tên người nhận:</label>
+                                            <form:input  class="form-control mb-4 mt-2 ${not empty errorName ? 'is-invalid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverName"/>
+                                            <form:errors path="receiverName" cssClass="invalid-feedback"/>
+                                            <label for="inputAddress" class="mb-0 me-4">Địa chỉ nhận hàng:</label>
+                                            <form:input  class="form-control mb-4 mt-2 ${not empty errorAddress ? 'is-invalid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverAddress"/>
+                                            <form:errors path="receiverAddress" cssClass="invalid-feedback"/>
+                                            <label for="inputNumber" class="mb-0 me-4">Số điện thoại:</label>
+                                            <form:input  class="form-control mb-4 mt-2 ${not empty errorPhone ? 'is-invalid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverPhone"/>
+                                            <form:errors path="receiverPhone" cssClass="invalid-feedback"/>
                                             <div class="mt-4 d-flex  justify-content-between ">
                                                 <div>
                                                     <i class="fas fa-arrow-left"></i>
@@ -188,7 +175,6 @@
                                     </div>  
                                 </div>  
                             </div>
-                        </c:if>
                     </div>
                 </div>
                 <!-- Cart Page End -->

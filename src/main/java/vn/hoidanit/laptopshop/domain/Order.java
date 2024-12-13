@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "orders")
@@ -18,8 +19,13 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotBlank(message = "Tên người nhận không thể để trống.")
     private String receiverName;
+
+    @NotBlank(message = "Địa chỉ người nhận không thể để trống.")
     private String receiverAddress;
+
+    @NotBlank(message = "Số điện thoại người nhận không thể để trống.")
     private String receiverPhone;
     private String status;
 

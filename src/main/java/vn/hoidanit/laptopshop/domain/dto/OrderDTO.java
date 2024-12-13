@@ -1,16 +1,16 @@
 package vn.hoidanit.laptopshop.domain.dto;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 
 public class OrderDTO {
 
-    @NotEmpty(message = "Tên người nhận không thể để trống.")
+    @NotBlank(message = "Tên người nhận không thể để trống.")
     private String receiverName;
 
-    @NotEmpty(message = "Địa chỉ người nhận không thể để trống.")
+    @NotBlank(message = "Địa chỉ người nhận không thể để trống.")
     private String receiverAddress;
 
-    @NotEmpty(message = "Số điện thoại người nhận không thể để trống.")
+    @NotBlank(message = "Số điện thoại người nhận không thể để trống.")
     private String receiverPhone;
 
     public String getReceiverName() {
