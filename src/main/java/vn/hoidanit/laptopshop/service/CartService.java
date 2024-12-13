@@ -128,4 +128,10 @@ public class CartService {
         }
     }
 
+    public void handleRemoveCart(Cart cart) {
+        if (cart != null) {
+            this.cartRepository.delete(cart);
+        }
+    }
+
 }

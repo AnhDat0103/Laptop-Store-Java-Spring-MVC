@@ -154,15 +154,26 @@
 
                                 <div id="form-input-infor" class="col-12 col-md-5">
                                     <div class="bg-light rounded">
-                                        <form:form action="/place-order" method="POST" class="p-4">
+                                        <form:form action="/place-order" method="POST" class="p-4" modelAttribute="order">
+                                            <c:set var="errorName">
+                                                <form:errors path="receiverName" cssClass="invalid-feedback"/>
+                                            </c:set>
+                                            <c:set var="errorAddress">
+                                                <form:errors path="receiverAddress" cssClass="invalid-feedback"/>
+                                            </c:set>
+                                            <c:set var="errorPhone">
+                                                <form:errors path="receiverPhone" cssClass="invalid-feedback"/>
+                                            </c:set>
                                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                             <h5 class="mb-0 me-4">Họ và tên người nhận:</h5>
-                                            <input class="form-control mb-4 mt-2" type="text" value="Hãy nhập thông tin tại đây..." aria-label="readonly input example" readonly name="receiverName">
+                                            <form:input id="inputReceiverName" class="form-control mb-4 mt-2 ${not empty errorName ? 'is-valid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverName"/>
+                                            ${errorName}
                                             <h5 class="mb-0 me-4">Địa chỉ nhận hàng:</h5>
-                                            <input class="form-control mb-4 mt-2" type="text" value="Hãy nhập thông tin tại đây..." aria-label="readonly input example" readonly name="receiverAddress">
+                                            <form:input id="inputReceiveraddress" class="form-control mb-4 mt-2 ${not empty errorAddress ? 'is-valid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverAddress"/>
+                                            ${errorAddress}
                                             <h5 class="mb-0 me-4">Số điện thoại:</h5>
-                                            
-                                            <input class="form-control mb-4 mt-2" type="text" value="Hãy nhập thông tin tại đây..." aria-label="readonly input example" readonly name="receiverPhone">
+                                            <form:input id="inputReceiverPhoneNumber" class="form-control mb-4 mt-2 ${not empty errorPhone ? 'is-valid': ''}" type="text" placeholder="Hãy nhập thông tin tại đây..." path="receiverPhone"/>
+                                            ${errorPhone}
                                             <div class="mt-4 d-flex  justify-content-between ">
                                                 <div>
                                                     <i class="fas fa-arrow-left"></i>

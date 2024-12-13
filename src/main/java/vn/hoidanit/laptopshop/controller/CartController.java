@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import vn.hoidanit.laptopshop.domain.Cart;
 import vn.hoidanit.laptopshop.domain.CartDetail;
 import vn.hoidanit.laptopshop.domain.User;
+import vn.hoidanit.laptopshop.domain.dto.OrderDTO;
 import vn.hoidanit.laptopshop.service.CartService;
+import vn.hoidanit.laptopshop.service.OrderService;
 import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
@@ -24,10 +28,12 @@ public class CartController {
 
     private final UserService userService;
     private final CartService cartService;
+    private final OrderService orderService;
 
-    public CartController(UserService userService, CartService cartService) {
+    public CartController(UserService userService, CartService cartService, OrderService orderService) {
         this.userService = userService;
         this.cartService = cartService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/cart-detail")
@@ -85,6 +91,26 @@ public class CartController {
         }
         model.addAttribute("cartDetails", cartDetails);
         model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("order", new OrderDTO());
         return "client/cart/check-out";
     }
+
+    @PostMapping("/place-order")
+    public String placeOrder(@ModelAttribute("order") @Valid OrderDTO orderDTO, BindingResult bindingResult,
+            Authentication authentication, HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession(false);
+        if (bindingResult.hasErrors()) {
+            return "client/cart/check-out";
+        } else {
+            User currentUser = this.userService.findByEmail(authentication.getName());
+            Cart cart = this.cartService.handleFindCartByUser(currentUser);
+            if (currentUser == null || cart == null) {
+                System.out.println("Can not place order.");
+            }
+            this.orderService.handleSaveOrder(orderDTO, currentUser, cart, session);
+            return "redirect:/";
+        }
+
+    }
+
 }
