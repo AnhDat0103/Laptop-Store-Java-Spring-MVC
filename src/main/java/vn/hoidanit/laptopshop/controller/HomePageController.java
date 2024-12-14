@@ -24,8 +24,10 @@ public class HomePageController {
 
     @GetMapping("/")
     public String showHomePage(Model model, @RequestParam("page") Optional<String> page) {
-        Page<Product> list = this.productService.handleShowAllProduct(page.orElse(""));
+        Page<Product> list = this.productService.handleShowAllProduct(page.orElse(""), 4);
         model.addAttribute("products", list.getContent());
+        model.addAttribute("totalPages", list.getTotalPages());
+        model.addAttribute("currentPage", list.getNumber());
         return "client/homepage";
     }
 

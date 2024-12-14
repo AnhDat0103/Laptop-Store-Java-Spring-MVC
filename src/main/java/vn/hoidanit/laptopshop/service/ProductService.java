@@ -18,18 +18,18 @@ public class ProductService {
 
     }
 
-    public Page<Product> handleShowAllProduct(String pageRequest) {
-        int page = 1;
+    public Page<Product> handleShowAllProduct(String pageRequest, int pageSize) {
+        int page = 0;
         try {
             if (pageRequest == null) {
-                page = 1;
+                page = 0;
             } else {
                 page = Integer.parseInt(pageRequest);
             }
         } catch (NumberFormatException e) {
-            page = 1;
+            page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 3);
+        Pageable pageable = PageRequest.of(page, pageSize);
         Page<Product> products = this.productRepository.findAll(pageable);
         if (products.isEmpty()) {
             return null;
