@@ -1,11 +1,14 @@
 package vn.hoidanit.laptopshop.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.service.ProductService;
@@ -20,9 +23,9 @@ public class HomePageController {
     }
 
     @GetMapping("/")
-    public String showHomePage(Model model) {
-        List<Product> list = this.productService.handleShowAllProduct();
-        model.addAttribute("products", list);
+    public String showHomePage(Model model, @RequestParam("page") Optional<String> page) {
+        Page<Product> list = this.productService.handleShowAllProduct(page.orElse(""));
+        model.addAttribute("products", list.getContent());
         return "client/homepage";
     }
 

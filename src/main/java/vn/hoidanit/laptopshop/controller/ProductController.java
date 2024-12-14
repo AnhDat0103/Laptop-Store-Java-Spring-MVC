@@ -1,7 +1,9 @@
 package vn.hoidanit.laptopshop.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,9 +32,12 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String getProductPage(Model model) {
-        List<Product> products = this.productService.handleShowAllProduct();
-        model.addAttribute("products", products);
+    public String getProductPage(Model model, @RequestParam("page") Optional<String> page) {
+        Page<Product> products = this.productService.handleShowAllProduct(page.orElse(""));
+        model.addAttribute("products", products.getContent());
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("currentPage", products.getNumber());
+
         return "admin/product/show";
     }
 

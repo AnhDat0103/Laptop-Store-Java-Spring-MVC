@@ -1,7 +1,8 @@
 package vn.hoidanit.laptopshop.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import vn.hoidanit.laptopshop.domain.Product;
@@ -17,8 +18,19 @@ public class ProductService {
 
     }
 
-    public List<Product> handleShowAllProduct() {
-        List<Product> products = this.productRepository.findAll();
+    public Page<Product> handleShowAllProduct(String pageRequest) {
+        int page = 1;
+        try {
+            if (pageRequest == null) {
+                page = 1;
+            } else {
+                page = Integer.parseInt(pageRequest);
+            }
+        } catch (NumberFormatException e) {
+            page = 1;
+        }
+        Pageable pageable = PageRequest.of(page, 3);
+        Page<Product> products = this.productRepository.findAll(pageable);
         if (products.isEmpty()) {
             return null;
         }
