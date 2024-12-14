@@ -38,4 +38,13 @@ public class HomePageController {
         return "client/product/detail";
     }
 
+    @GetMapping("/client/page/product")
+    public String getProductPage(Model model, @RequestParam("page") Optional<String> page) {
+        Page<Product> products = this.productService.handleShowAllProduct(page.orElse(""), 6);
+        model.addAttribute("products", products.getContent());
+        model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("currentPage", products.getNumber());
+        return "client/productpage";
+    }
+
 }
