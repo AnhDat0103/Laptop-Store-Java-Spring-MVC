@@ -32,7 +32,8 @@ public class ProductController {
     }
 
     @GetMapping("/admin/product")
-    public String getProductPage(Model model, @RequestParam("page") Optional<String> page) {
+    public String getProductPage(Model model, @RequestParam("page") Optional<String> page,
+            @RequestParam("name") Optional<String> nameProduct) {
         Page<Product> products = this.productService.handleShowAllProduct(page.orElse(""), 3);
         model.addAttribute("products", products.getContent());
         model.addAttribute("totalPages", products.getTotalPages());

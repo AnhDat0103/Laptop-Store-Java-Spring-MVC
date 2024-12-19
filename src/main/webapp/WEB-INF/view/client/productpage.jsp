@@ -53,7 +53,7 @@
                         <div class="row g-4">
                             <div class="col-lg-4">
                                 <div class="row g-4">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" id="factoryFilter">
                                         <div class="mb-2"><b>Hãng sản xuất</b></div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="checkbox" id="factory-1"
@@ -87,7 +87,7 @@
                                                     <label class="form-check-label" for="factory-6">Acer</label>
                                                 </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" id="targetFilter">
                                         <div class="mb-2"><b>Mục đích sử dụng</b></div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="checkbox" id="target-1"
@@ -118,7 +118,7 @@
                                             <label class="form-check-label" for="target-5">Doanh nhân</label>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12" id="priceFilter">
                                         <div class="mb-2"><b>Mức giá</b></div>
 
                                                 <div class="form-check form-check-inline">
@@ -163,14 +163,14 @@
                                         </div>
 
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="sort-3"
+                                            <input class="form-check-input" type="radio" id="sort-3" checked
                                                 value="gia-nothing" name="radio-sort">
-                                            <label class="form-check-label" for="sort-3">Không sắp xếp</label>
+                                            <label class="form-check-label" for="sort-3" >Không sắp xếp</label>
                                         </div>
 
                                     </div>
                                     <div class="col-lg-12">
-                                        <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4">
+                                        <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4" id="btnFilter">
                                                     Lọc Sản Phẩm
                                         </button>
                                     </div>
@@ -178,47 +178,55 @@
                             </div>
                             <div class="col-lg-8">
                                 <div class="row g-4 justify-content-between">
-                                    <c:forEach items="${products}" var="product">
-                                        <div class="col-md-4 col-lg-4 col-xl-4">
-                                            <div class="rounded position-relative fruite-item">
-                                                <div class="fruite-img">
-                                                    <img src="/images/product/${product.image}" class="img-fluid w-100 rounded-top" alt="">
-                                                </div>
-                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Laptop</div>
-                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                    <h4 style="font-size: 15px;"><a href="/client/product/${product.id}">${product.name}</a></h4>
-                                                    <p style="font-size: 13px;">${product.shortDesc}</p>
-                                                    <div class="d-flex justify-content-center flex-lg-wrap"> 
-                                                        <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fs-5 fw-bold mb-0"><fmt:formatNumber value="${product.price}"/> đ</p>
-                                                        <form action="/add-to-cart/${product.id}" method="POST">
-                                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                                            <button style="text-align: center; width: 100%;" type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                                <i class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                 Add to cart
-                                                            </button>    
-                                                        </form>
+                                    <c:if test="${totalPages ==  0}">
+                                                <div>Không tìm thấy sản phẩm</div>
+                                     </c:if>
+                                        <c:forEach items="${products}" var="product">
+                                            <div class="col-md-4 col-lg-4 col-xl-4">
+                                                <div class="rounded position-relative fruite-item">
+                                                    <div class="fruite-img">
+                                                        <img src="/images/product/${product.image}" class="img-fluid w-100 rounded-top" alt="">
+                                                    </div>
+                                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Laptop</div>
+                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                        <h4 style="font-size: 15px;"><a href="/client/product/${product.id}">${product.name}</a></h4>
+                                                        <p style="font-size: 13px;">${product.shortDesc}</p>
+                                                        <div class="d-flex justify-content-center flex-lg-wrap"> 
+                                                            <p style="font-size: 15px; text-align: center; width: 100%;" class="text-dark fs-5 fw-bold mb-0"><fmt:formatNumber value="${product.price}"/> đ</p>
+                                                            <form action="/add-to-cart/${product.id}" method="POST">
+                                                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                                                <button style="text-align: center; width: 100%;" type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                     Add to cart
+                                                                </button>    
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </c:forEach>
+                                        <c:if test="${totalPages > 0}">
+                                        <div class="col-12">
+                                            <nav aria-label="Page navigation example" class="mt-5">
+                                                <ul class="pagination d-flex justify-content-center">
+                                                    
+                                                        <li class="page-item ">
+                                                            <a class=" ${currentPage eq 0 ? 'page-link disabled': 'page-link'}" href="/client/page/product?page=${currentPage - 1}${queryString}">Previous</a>
+                                                          </li>
+                                                          <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
+                                                                <li class="page-item"> 
+                                                                    <a class="${currentPage eq loop.index ? 'page-link active' : 'page-link'}" href="/client/page/product?page=${loop.index}${queryString}">${loop.index + 1}</a>
+                                                                </li>
+                                                        </c:forEach>
+                                                          <li class="page-item">
+                                                            <a class=" ${currentPage eq (totalPages - 1) ? 'page-link disabled': 'page-link'}" href="/client/page/product?page=${currentPage + 1}${queryString}">Next</a>
+                                                          </li>
+                                                  
+                                                </ul>
+                                              </nav>
                                         </div>
-                                    </c:forEach>
-                                    <div class="col-12">
-                                        <nav aria-label="Page navigation example" class="mt-5">
-                                            <ul class="pagination d-flex justify-content-center">
-                                              <li class="page-item ">
-                                                <a class=" ${currentPage eq 0 ? 'page-link disabled': 'page-link'}" href="/client/page/product?page=${currentPage - 1}">Previous</a>
-                                              </li>
-                                              <c:forEach begin="0" end="${totalPages - 1}" varStatus="loop">
-                                                    <li class="page-item"> 
-                                                        <a class="${currentPage eq loop.index ? 'page-link active' : 'page-link'}" href="/client/page/product?page=${loop.index}">${loop.index + 1}</a>
-                                                    </li>
-                                            </c:forEach>
-                                              <li class="page-item">
-                                                <a class=" ${currentPage eq (totalPages - 1) ? 'page-link disabled': 'page-link'}" href="/client/page/product?page=${currentPage + 1}">Next</a>
-                                              </li>
-                                            </ul>
-                                          </nav>
-                                    </div>
+                                        </c:if>
+                                                 
                                 </div>
                             </div>
                         </div>
