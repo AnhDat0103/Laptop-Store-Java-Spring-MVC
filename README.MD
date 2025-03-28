@@ -53,6 +53,35 @@ $ cd Laptop-Store-Java-Spring-MVC
 
 🌐 Access http://localhost:8080 to use the application.
 
+📸 Screenshots
+
+1️⃣ Home Page
+
+2️⃣ Product Listing
+
+
+3️⃣ Product Details
+
+
+4️⃣ Shopping Cart
+
+
+5️⃣ Checkout Page
+
+6️⃣ Order History
+
+
+7️⃣ Admin Dashboard
+
+
+8️⃣ Order Management
+
+
+9️⃣ User Profile Page
+
+
+🔟 Login & Registration
+
 📩 Contact
 
 👨‍💻 Author: Anh Dat
